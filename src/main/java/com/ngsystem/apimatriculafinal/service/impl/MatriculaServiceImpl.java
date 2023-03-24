@@ -36,7 +36,7 @@ public class MatriculaServiceImpl extends CRUDImpl<Matricula,Integer> implements
     public List<ResultDTO> cursoEstudiante() {
         //grupo de estudiantes matriculados
         var objlista = new ArrayList<ResultDTO>();
-        var resultado= new ResultDTO();
+
         Map<Integer,Map<String,Long>> porEstudiante= repo.findAll()
                 .stream()
                 .collect(groupingBy(d->d.getIdMatricula(),Collectors.groupingBy(d->d.getEstudiante().getNombres(),counting())));
@@ -57,6 +57,7 @@ public class MatriculaServiceImpl extends CRUDImpl<Matricula,Integer> implements
         porCursos.forEach((k,v)->{
             Integer id = k.intValue();
             String curso = v.keySet().toString().replace("[","").replace("]","");
+            var resultado= new ResultDTO();
             //System.out.println(id);
             System.out.println(curso);
             //System.out.println(porEstudiante.entrySet().stream().filter(e->e.getKey().equals(id)).toString());
@@ -69,6 +70,7 @@ public class MatriculaServiceImpl extends CRUDImpl<Matricula,Integer> implements
             resultado.setCursos(curso);
             resultado.setAlumno(result.toString().substring(4,10).replace("=",""));
             objlista.add(resultado);
+            curso="";
         });
 
     return objlista;
