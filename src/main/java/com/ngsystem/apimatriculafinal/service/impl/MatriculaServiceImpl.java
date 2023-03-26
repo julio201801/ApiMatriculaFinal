@@ -35,6 +35,7 @@ public class MatriculaServiceImpl extends CRUDImpl<Matricula,Integer> implements
     @Override
     public List<ResultDTO> cursoEstudiante() {
         //grupo de estudiantes matriculados
+        //estrategia final
         var objlista = new ArrayList<ResultDTO>();
 
         Map<Integer,Map<String,Long>> porEstudiante= repo.findAll()
@@ -66,9 +67,9 @@ public class MatriculaServiceImpl extends CRUDImpl<Matricula,Integer> implements
                     .filter(map -> map.getKey().equals(id))
                     .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
 
-            System.out.println(result.toString().substring(4,10).replace("=",""));
+            System.out.println(result.toString().substring(4,result.toString().length()-3).replace("=",""));
             resultado.setCursos(curso);
-            resultado.setAlumno(result.toString().substring(4,10).replace("=",""));
+            resultado.setAlumno(result.toString().substring(4,result.toString().length()-3).replace("=",""));
             objlista.add(resultado);
             curso="";
         });
